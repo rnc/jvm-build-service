@@ -1,4 +1,4 @@
-name: Check Kubernetes YAMLs with kube-linter
+name: Validate Kubernetes YAMLs
 
 on:
   pull_request:

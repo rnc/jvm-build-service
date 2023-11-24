@@ -1,4 +1,4 @@
-name: Validate PR - golang CI
+name: GoLang CI
 on:
   pull_request:
     branches: [ main ]
