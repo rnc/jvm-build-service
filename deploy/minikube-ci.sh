@@ -34,7 +34,7 @@ kubectl delete --ignore-not-found deployments.apps hacbs-jvm-operator -n jvm-bui
 kubectl delete --ignore-not-found deployments.apps jvm-build-workspace-artifact-cache
 
 DIR=`dirname $0`
-kubectl apply -f $DIR/namespace.yaml
+kubectl apply -f $DIR/base/namespace/namespace.yaml
 kubectl config set-context --current --namespace=test-jvm-namespace
 
 JVM_BUILD_SERVICE_IMAGE=quay.io/$QUAY_USERNAME/hacbs-jvm-controller \
