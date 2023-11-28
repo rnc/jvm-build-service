@@ -3,4 +3,3 @@ kind: Kustomization
 
 resources:
   - openshift-pipelines-subscription.yaml
-  - quota.yaml
