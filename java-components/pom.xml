@@ -285,14 +285,6 @@
         </dependencies>
     </dependencyManagement>
 
-    <dependencies>
-       <dependency>
-          <groupId>io.quarkus</groupId>
-          <artifactId>quarkus-jacoco</artifactId>
-          <scope>test</scope>
-       </dependency>
-    </dependencies>
-
     <build>
         <pluginManagement>
             <plugins>
