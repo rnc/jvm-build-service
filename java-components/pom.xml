@@ -283,30 +283,36 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>org.jacoco</groupId>
-                <artifactId>org.jacoco.core</artifactId>
-                <version>0.8.10</version>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-jacoco</artifactId>
+                <version>3.5.3</version>
                 <scope>test</scope>
             </dependency>
-            <dependency>
-                <groupId>org.jacoco</groupId>
-                <artifactId>org.jacoco.report</artifactId>
-                <version>0.8.10</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.jacoco</groupId>
-                <artifactId>org.jacoco.agent</artifactId>
-                <version>0.8.10</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.jacoco</groupId>
-                <artifactId>org.jacoco.agent</artifactId>
-                <version>0.8.10</version>
-                <type>runtime</type>
-                <scope>test</scope>
-            </dependency>
+            <!-- <dependency> -->
+            <!--     <groupId>org.jacoco</groupId> -->
+            <!--     <artifactId>org.jacoco.core</artifactId> -->
+            <!--     <version>0.8.10</version> -->
+            <!--     <scope>test</scope> -->
+            <!-- </dependency> -->
+            <!-- <dependency> -->
+            <!--     <groupId>org.jacoco</groupId> -->
+            <!--     <artifactId>org.jacoco.report</artifactId> -->
+            <!--     <version>0.8.10</version> -->
+            <!--     <scope>test</scope> -->
+            <!-- </dependency> -->
+            <!-- <dependency> -->
+            <!--     <groupId>org.jacoco</groupId> -->
+            <!--     <artifactId>org.jacoco.agent</artifactId> -->
+            <!--     <version>0.8.10</version> -->
+            <!--     <scope>test</scope> -->
+            <!-- </dependency> -->
+            <!-- <dependency> -->
+            <!--     <groupId>org.jacoco</groupId> -->
+            <!--     <artifactId>org.jacoco.agent</artifactId> -->
+            <!--     <version>0.8.10</version> -->
+            <!--     <type>runtime</type> -->
+            <!--     <scope>test</scope> -->
+            <!-- </dependency> -->
         </dependencies>
     </dependencyManagement>
 
