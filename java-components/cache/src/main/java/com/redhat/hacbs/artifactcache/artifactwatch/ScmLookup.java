@@ -85,7 +85,7 @@ public class ScmLookup {
                                 Scm scm = new Scm();
 
                                 if (newObj.getMetadata().getAnnotations() != null &&
-                                        newObj.getMetadata().getAnnotations().containsKey(ModelConstants.DEPENDENCY) &&
+                                        newObj.getMetadata().getAnnotations().containsKey(ModelConstants.DEPENDENCY_CREATED) &&
                                         ModelConstants.ARTIFACT_BUILD_NEW.equals(newObj.getStatus().getState())) {
                                     // If originally created from a DependencyBuild using a custom SCM but we're doing a rebuild
                                     // then don't use the recipe DB for GAV lookup.
@@ -93,12 +93,13 @@ public class ScmLookup {
                                     newObj.getStatus().setState(ModelConstants.ARTIFACT_BUILD_DISCOVERING);
                                     Log.infof("Tagging artifactBuild for rebuild with URI %s and hash %s ", scm.getScmURL(),
                                             scm.getCommitHash());
+                                    Log.warnf("### newObj annotations %s", newObj.getMetadata().getAnnotations());
 
                                 } else if (newObj.getMetadata().getAnnotations() != null &&
-                                        newObj.getMetadata().getAnnotations().containsKey(ModelConstants.DEPENDENCY)) {
+                                        newObj.getMetadata().getAnnotations().containsKey(ModelConstants.DEPENDENCY_CREATED)) {
                                     // If the DependencyBuild was created directly no need to look up the GAV source, instead gather
                                     // from existing dependency.
-                                    var depName = newObj.getMetadata().getAnnotations().get(ModelConstants.DEPENDENCY);
+                                    var depName = newObj.getMetadata().getAnnotations().get(ModelConstants.DEPENDENCY_CREATED);
                                     var resource = client.resources(DependencyBuild.class).withName(depName);
                                     DependencyBuild dependencyBuild = resource.get();
                                     while (dependencyBuild.getStatus().getState()
