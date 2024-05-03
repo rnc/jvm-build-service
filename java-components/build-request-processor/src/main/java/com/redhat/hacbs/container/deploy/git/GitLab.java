@@ -17,6 +17,8 @@ import org.gitlab4j.api.models.Visibility;
 
 import io.quarkus.logging.Log;
 
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+
 public class GitLab extends Git {
     private final GitLabApi gitLabApi;
 
@@ -113,16 +115,16 @@ public class GitLab extends Git {
         if (project == null) {
             throw new RuntimeException("Call create first");
         }
-        return pushRepository(path, project.getHttpUrlToRepo(), commit, imageId, false);
+        return pushRepository(path, project.getHttpUrlToRepo(), commit, imageId, false, false);
     }
 
     @Override
-    public GitStatus add(Path path, String commit, String imageId, boolean untracked)
+    public GitStatus add(Path path, String commit, String imageId, boolean untracked, boolean workflow)
         throws IOException {
         if (project == null) {
             throw new RuntimeException("Call create first");
         }
-        return pushRepository(path, project.getHttpUrlToRepo(), commit, imageId, untracked);
+        return pushRepository(path, project.getHttpUrlToRepo(), commit, imageId, untracked, workflow);
     }
 
     @Override
@@ -133,5 +135,10 @@ public class GitLab extends Git {
     @Override
     public String getName() {
         return project.getNamespace().getPath() + "/" + project.getName();
+    }
+
+    @Override
+    public String getWorkflowPath() {
+        return isEmpty(project.getCiConfigPath()) ? ".gitlab-ci.yml" : project.getCiConfigPath();
     }
 }
