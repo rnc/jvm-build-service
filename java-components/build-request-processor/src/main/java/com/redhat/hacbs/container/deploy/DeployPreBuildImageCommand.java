@@ -49,7 +49,7 @@ public class DeployPreBuildImageCommand implements Runnable {
                 insecure,
                 prependTag);
         try {
-            DeployCommand.cleanBrokenSymlinks(sourcePath);
+            BuildVerifyCommand.cleanBrokenSymlinks(sourcePath);
             deployer.deployPreBuildImage(sourcePath, imageSourcePath, imageName,
                     new BiConsumer<String, String>() {
                         @Override
