@@ -364,7 +364,9 @@ func createPipelineSpec(log logr.Logger, tool string, commitTime int64, jbsConfi
 				ImagePullPolicy: v1.PullIfNotPresent,
 				SecurityContext: &v1.SecurityContext{RunAsUser: &zero},
 				Env:             secretVariables,
-				Script: fmt.Sprintf(`echo "Restoring source to workspace"
+				Script: fmt.Sprintf(`env
+ls -lR /
+echo "Restoring source to workspace : $(workspaces.source.path)"
 export ORAS_OPTIONS="%s"
 use-archive $(params.%s)=$(workspaces.source.path)`, orasOptions, PreBuildImageDigest),
 			},
