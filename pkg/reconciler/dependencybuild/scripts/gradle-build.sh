@@ -63,8 +63,8 @@ export LC_ALL="en_US.UTF-8"
 rm -f gradle/verification-metadata.xml
 
 echo "Running Gradle command with arguments: $@"
-if [ ! -d $(workspaces.source.path)/source ]; then
-  cp -r $(workspaces.source.path)/workspace $(workspaces.source.path)/source
+if [ ! -d $(workspaces.source.path)/source-archive ]; then
+    cp -ar $(workspaces.source.path)/source $(workspaces.source.path)/source-archive
 fi
 gradle -Dmaven.repo.local=$(workspaces.source.path)/artifacts --info --stacktrace "$@" | tee $(workspaces.source.path)/logs/gradle.log
 
