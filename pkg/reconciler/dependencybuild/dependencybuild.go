@@ -50,7 +50,6 @@ const (
 	PipelineParamChainsGitCommit      = "CHAINS-GIT_COMMIT"
 	PipelineParamGoals                = "GOALS"
 	PipelineParamJavaVersion          = "JAVA_VERSION"
-	PipelineParamToolVersion          = "TOOL_VERSION"
 	PipelineParamEnforceVersion       = "ENFORCE_VERSION"
 	PipelineParamProjectVersion       = "PROJECT_VERSION"
 	PipelineParamCacheUrl             = "CACHE_URL"
@@ -591,9 +590,6 @@ func (r *ReconcileDependencyBuild) handleStateBuilding(ctx context.Context, db *
 		{Name: PipelineParamChainsGitCommit, Value: tektonpipeline.ResultValue{Type: tektonpipeline.ParamTypeString, StringVal: db.Spec.ScmInfo.CommitHash}},
 		{Name: PipelineParamPath, Value: tektonpipeline.ResultValue{Type: tektonpipeline.ParamTypeString, StringVal: contextDir}},
 		{Name: PipelineParamGoals, Value: tektonpipeline.ResultValue{Type: tektonpipeline.ParamTypeArray, ArrayVal: attempt.Recipe.CommandLine}},
-		{Name: PipelineParamEnforceVersion, Value: tektonpipeline.ResultValue{Type: tektonpipeline.ParamTypeString, StringVal: attempt.Recipe.EnforceVersion}},
-		{Name: PipelineParamProjectVersion, Value: tektonpipeline.ResultValue{Type: tektonpipeline.ParamTypeString, StringVal: db.Spec.Version}},
-		//		{Name: PipelineParamToolVersion, Value: tektonpipeline.ResultValue{Type: tektonpipeline.ParamTypeString, StringVal: attempt.Recipe.ToolVersion}},
 		{Name: PipelineParamJavaVersion, Value: tektonpipeline.ResultValue{Type: tektonpipeline.ParamTypeString, StringVal: attempt.Recipe.JavaVersion}},
 	}
 
@@ -648,6 +644,7 @@ func (r *ReconcileDependencyBuild) handleStateBuilding(ctx context.Context, db *
 			},
 		}
 	}
+
 	if jbsConfig.Annotations != nil && jbsConfig.Annotations[jbsconfig.CITests] == "true" {
 		log.Info(fmt.Sprintf("Configuring resources for %#v", BuildTaskName))
 		podMemR, _ := resource.ParseQuantity("1792Mi")

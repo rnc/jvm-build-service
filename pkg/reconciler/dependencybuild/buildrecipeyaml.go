@@ -179,7 +179,7 @@ func createPipelineSpec(log logr.Logger, tool string, commitTime int64, jbsConfi
 	//toolEnv = append(toolEnv, v1.EnvVar{Name: PipelineParamToolVersion, Value: recipe.ToolVersion})
 	//toolEnv = append(toolEnv, v1.EnvVar{Name: PipelineParamProjectVersion, Value: db.Spec.Version})
 	toolEnv = append(toolEnv, v1.EnvVar{Name: JavaHome, Value: javaHome})
-	toolEnv = append(toolEnv, v1.EnvVar{Name: PipelineParamEnforceVersion, Value: recipe.EnforceVersion})
+	//toolEnv = append(toolEnv, v1.EnvVar{Name: PipelineParamEnforceVersion, Value: recipe.EnforceVersion})
 
 	additionalMemory := recipe.AdditionalMemory
 	if systemConfig.Spec.MaxAdditionalMemory > 0 && additionalMemory > systemConfig.Spec.MaxAdditionalMemory {
@@ -288,8 +288,6 @@ func createPipelineSpec(log logr.Logger, tool string, commitTime int64, jbsConfi
 		{Name: PipelineParamJavaVersion, Type: tektonpipeline.ParamTypeString},
 		//		{Name: PipelineParamToolVersion, Type: tektonpipeline.ParamTypeString},
 		{Name: PipelineParamPath, Type: tektonpipeline.ParamTypeString},
-		{Name: PipelineParamEnforceVersion, Type: tektonpipeline.ParamTypeString},
-		{Name: PipelineParamProjectVersion, Type: tektonpipeline.ParamTypeString},
 		{Name: PipelineParamCacheUrl, Type: tektonpipeline.ParamTypeString, Default: &tektonpipeline.ResultValue{Type: tektonpipeline.ParamTypeString, StringVal: cacheUrl}},
 	}
 	secretVariables := secretVariables(jbsConfig)
@@ -550,8 +548,13 @@ func createPipelineSpec(log logr.Logger, tool string, commitTime int64, jbsConfi
 				{
 					Name: "BUILD_ARGS",
 					Value: tektonpipeline.ParamValue{
-						Type:     tektonpipeline.ParamTypeArray,
-						ArrayVal: []string{"CACHE_URL=" + cacheUrl},
+						Type: tektonpipeline.ParamTypeArray,
+						ArrayVal: []string{
+							// This allows us to set environment variables that can be picked up by our Containerfile/build script.
+							"CACHE_URL=" + cacheUrl,
+							PipelineParamEnforceVersion + "=" + recipe.EnforceVersion,
+							PipelineParamProjectVersion + "=" + db.Spec.Version,
+						},
 					},
 				},
 			},

@@ -15,6 +15,9 @@ import picocli.CommandLine;
  */
 public abstract class AbstractPreprocessor implements Runnable {
 
+    /**
+     * Equivalent to <code>$(workspaces.source.path)/source</code>
+     */
     @CommandLine.Parameters(description = "The directory to process")
     protected Path buildRoot;
 
@@ -37,7 +40,12 @@ public abstract class AbstractPreprocessor implements Runnable {
         ANT,
         GRADLE,
         MAVEN,
-        SBT
+        SBT;
+
+        @Override
+        public String toString() {
+            return name().toLowerCase();
+        }
     }
 
     protected ToolType type;
@@ -56,9 +64,13 @@ public abstract class AbstractPreprocessor implements Runnable {
             USER 0
             WORKDIR /var/workdir
             RUN mkdir -p /var/workdir/software/settings /original-content/marker
-            # CACHE_URL is deprecated.
+
             ARG CACHE_URL=""
-            ENV CACHE_URL=$CACHE_URL
+            ARG ENFORCE_VERSION=""
+            ARG PROJECT_VERSION=""
+            ENV CACHE_URL=$CACHE_URL # CACHE_URL is deprecated.
+            ENV ENFORCE_VERSION=$ENFORCE_VERSION
+            ENV PROJECT_VERSION=$PROJECT_VERSION
             COPY .jbs/run-build.sh /var/workdir
             COPY . /var/workdir/workspace/source/
             RUN /var/workdir/run-build.sh
