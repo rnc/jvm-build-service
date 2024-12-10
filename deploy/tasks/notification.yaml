@@ -19,9 +19,10 @@ spec:
     - name: NOTIFICATION_CONTEXT
       description: URL to send notification to
       type: string
-    - name: PNC_ACCESS_TOKEN
-      description: Access token for PNC authorization
+    - name: ACCESS_TOKEN
+      description: Access token for OAuth.
       type: string
+      default: ""
     - name: JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE
       description: Name of the processor image. Useful to override for development.
       type: string
@@ -44,6 +45,6 @@ spec:
         fi
         echo "Send notification >>\n$data"
         #        curl -v -X POST -H "Content-Type: application/json" \
-        #          -H "Authorization: Bearer $(params.PNC_ACCESS_TOKEN)" \
+        #          -H "Authorization: Bearer $(params.ACCESS_TOKEN)" \
         #          --data $data \
         #          $(params.NOTIFICATION_URL)

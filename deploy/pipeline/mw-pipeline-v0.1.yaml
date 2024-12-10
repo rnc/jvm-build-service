@@ -175,14 +175,14 @@ spec:
       params:
         - name: JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE
           value: $(params.JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE)
+        - name: ACCESS_TOKEN
+          value: $(params.ACCESS_TOKEN)
         - name: STATUS
           value: $(tasks.status)
 #        - name: DEPLOYMENTS
 #          value: $(tasks.maven-deployment.results.DEPLOYMENTS)
         - name: NOTIFICATION_CONTEXT
           value: $(params.NOTIFICATION_CONTEXT)
-        - name: PNC_ACCESS_TOKEN
-          value: $(params.PNC_ACCESS_TOKEN)
       taskRef:
         resolver: http
         params:
