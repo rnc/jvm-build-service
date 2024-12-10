@@ -41,10 +41,9 @@ spec:
         else
           echo "Notify PNC on pipeline completion"
           data={\"status\":\"$(params.STATUS)\"}
-          #,\"files\":\"$(params.DEPLOYMENTS)\"}
         fi
         echo "Send notification >>\n$data"
         #        curl -v -X POST -H "Content-Type: application/json" \
         #          -H "Authorization: Bearer $(params.ACCESS_TOKEN)" \
         #          --data $data \
-        #          $(params.NOTIFICATION_URL)
+        echo "### context: $(params.NOTIFICATION_CONTEXT)"
