@@ -172,8 +172,6 @@ spec:
       params:
         - name: ACCESS_TOKEN
           value: $(params.ACCESS_TOKEN)
-          type: string
-          default: ""
         - name: JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE
           value: $(params.JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE)
         - name: NOTIFICATION_CONTEXT
@@ -181,6 +179,21 @@ spec:
         - name: STATUS
           value: $(tasks.status)
       taskSpec:
+        params:
+          - name: STATUS
+            description: Aggregate tasks status
+            type: string
+          - name: NOTIFICATION_CONTEXT
+            description: Notification context
+            type: string
+          - name: ACCESS_TOKEN
+            description: Access token for OAuth.
+            type: string
+            default: ""
+          - name: JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE
+            description: Name of the processor image. Useful to override for development.
+            type: string
+            default: "quay.io/redhat-user-workloads/konflux-jbs-pnc-tenant/jvm-build-service/build-request-processor:latest"
         steps:
           - name: notification
             image: $(params.JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE)
