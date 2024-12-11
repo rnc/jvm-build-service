@@ -168,24 +168,42 @@ spec:
 
   finally:
     - name: notification
-      displayName: "Notify PNC"
-#      when:
-#        - input: $(params.ENABLE_NOTIFICATION)
-#          operator: in
-#          values: ["true"]
-      params:
-        - name: JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE
-          value: $(params.JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE)
-        - name: ACCESS_TOKEN
-          value: $(params.ACCESS_TOKEN)
-        - name: STATUS
-          value: $(tasks.status)
-#        - name: DEPLOYMENTS
-#          value: $(tasks.maven-deployment.results.DEPLOYMENTS)
-        - name: NOTIFICATION_CONTEXT
-          value: $(params.NOTIFICATION_CONTEXT)
-      taskRef:
-        resolver: http
+      displayName: "Notify PNC driver"
+      taskSpec:
         params:
-          - name: url
-            value: https://raw.githubusercontent.com/rnc/jvm-build-service/refs/heads/BR3/deploy/tasks/notification.yaml
+          - name: ACCESS_TOKEN
+            value: $(params.ACCESS_TOKEN)
+            type: string
+            default: ""
+          - name: JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE
+            value: $(params.JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE)
+          - name: NOTIFICATION_CONTEXT
+            value: $(params.NOTIFICATION_CONTEXT)
+          - name: STATUS
+            value: $(tasks.status)
+        steps:
+          - name: notification
+            image: $(params.JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE)
+            #image: quay.io/redhat-appstudio/build-trusted-artifacts:latest@sha256:81c4864dae6bb11595f657be887e205262e70086a05ed16ada827fd6391926ac
+            script: |
+              #!/bin/bash
+              set -x
+              data=""
+              if [ $(params.STATUS) == "Failed" ]; then
+                echo "Looks like one or more tasks returned failure!"
+                data={\"status\":\"$(params.STATUS)\"}
+              else
+                echo "Notify PNC on pipeline completion"
+                data={\"status\":\"$(params.STATUS)\"}
+              fi
+              echo "Send notification >>\n$data"
+              #        curl -v -X POST -H "Content-Type: application/json" \
+              #          -H "Authorization: Bearer $(params.ACCESS_TOKEN)" \
+              #          --data $data \
+              echo "### context: $(params.NOTIFICATION_CONTEXT)"
+
+#      taskRef:
+#        resolver: http
+#        params:
+#          - name: url
+#            value: https://raw.githubusercontent.com/rnc/jvm-build-service/refs/heads/BR3/deploy/tasks/notification.yaml

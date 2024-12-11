@@ -17,7 +17,7 @@ spec:
       description: Aggregate tasks status
       type: string
     - name: NOTIFICATION_CONTEXT
-      description: URL to send notification to
+      description: Notification context
       type: string
     - name: ACCESS_TOKEN
       description: Access token for OAuth.
