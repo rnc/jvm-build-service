@@ -169,18 +169,18 @@ spec:
   finally:
     - name: notification
       displayName: "Notify PNC driver"
+      params:
+        - name: ACCESS_TOKEN
+          value: $(params.ACCESS_TOKEN)
+          type: string
+          default: ""
+        - name: JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE
+          value: $(params.JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE)
+        - name: NOTIFICATION_CONTEXT
+          value: $(params.NOTIFICATION_CONTEXT)
+        - name: STATUS
+          value: $(tasks.status)
       taskSpec:
-        params:
-          - name: ACCESS_TOKEN
-            value: $(params.ACCESS_TOKEN)
-            type: string
-            default: ""
-          - name: JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE
-            value: $(params.JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE)
-          - name: NOTIFICATION_CONTEXT
-            value: $(params.NOTIFICATION_CONTEXT)
-          - name: STATUS
-            value: $(tasks.status)
         steps:
           - name: notification
             image: $(params.JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE)
