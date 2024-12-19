@@ -2,7 +2,7 @@
 apiVersion: tekton.dev/v1
 kind: Task
 metadata:
-  name: pre-build
+  name: pre-build-git
   annotations:
     tekton.dev/pipelines.minVersion: 0.12.1
     tekton.dev/tags: image-build, konflux
@@ -11,7 +11,7 @@ metadata:
     build.appstudio.redhat.com/build_type: docker
 spec:
   description: |-
-    Sets up pre-build running the preprocessor, pushing the source and creating the OCI image.
+    Sets up pre-build for pushing the source.
   params:
     - name: NAME
       description: Name of the pipeline run (i.e. unique dependency build name)
